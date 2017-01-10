@@ -18,7 +18,7 @@ def get_num(proba):
 
 
 def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, num_worst_vec_to_update_from, vec_len,
-             optimisation_cycles, eval_f, eps=0.01):
+             optimisation_cycles, eval_f, eps=0.01, vec_storage=None):
 
     # vector initialisation
     vec = np.full(vec_len, 0.5, dtype=float)
@@ -27,7 +27,12 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
     population = np.empty((pop_size, vec_len), dtype=int)
     scores = [None for _ in range(pop_size)]
 
+    # initialise best result
     best_of_all = [-float("inf"), None]
+
+    # store vec?
+    if vec_storage is not None:
+        vec_storage.append(list(vec))
 
     for i in range(optimisation_cycles):
         # solution vectors generation
@@ -58,6 +63,11 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
                 vec[i] = 0 + eps
             elif vec[i] > 1:
                 vec[i] = 1 - eps
+
+        # store vec?
+        if vec_storage is not None:
+            vec_storage.append(list(vec))
+
     print best_of_all
     return best_of_all[1]
 
@@ -66,6 +76,9 @@ if __name__ == '__main__':
     def eval_fun(nums, bits):
         assert len(nums) == len(bits)
         return sum(nums[i]*bits[i] for i in range(len(nums)))
-    data = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13]
-    print optimize(0.02, 0.02, 10, 2, 2, 13, 25, functools.partial(eval_fun, data))
+    data = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, 15, 16, -17, -18, -19]
+    l = []
+    print optimize(0.02, 0.02, 10, 2, 2, len(data), 25, functools.partial(eval_fun, data), vec_storage=l)
+    print 'l'
+    print np.asarray(l, float)
 
