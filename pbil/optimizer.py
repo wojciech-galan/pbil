@@ -19,6 +19,20 @@ def get_num(proba):
 
 def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, num_worst_vec_to_update_from, vec_len,
              optimisation_cycles, eval_f, eps=0.01, vec_storage=None):
+    """
+
+    :param learn_rate: rate of pushing the population vector (vec) towards each of the best individuals
+    :param neg_learn_rate: similar to learn rate, but pushes the vector away from the worst individuals
+    :param pop_size: num of individuals in population
+    :param num_best_vec_to_update_from: how many best individuals will be used to update population vector
+    :param num_worst_vec_to_update_from: how many worst individuals will be used to update population vector
+    :param vec_len: length of the population vector
+    :param optimisation_cycles: num of optimisation cycles
+    :param eval_f: function for individual's fitness evaluation
+    :param eps: population vector will be pushed away eps from extreme values (0, 1)
+    :param vec_storage: storage for population vectors from each turns, should implement "append" method
+    :return:
+    """
 
     # vector initialisation
     vec = np.full(vec_len, 0.5, dtype=float)
