@@ -31,7 +31,7 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
     :param eval_f: function for individual's fitness evaluation
     :param eps: population vector will be pushed away eps from extreme values (0, 1)
     :param vec_storage: storage for population vectors from each turns, should implement "append" method
-    :return:
+    :return: best binary vector. If many vectors have the same fitnesses, returns the one, that appeared most early
     """
 
     # vector initialisation
@@ -53,13 +53,12 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
         for j in range(pop_size):
             for k in range(vec_len):
                 population[j][k] = get_num(vec[k])
-            # vector evoluation
+            # vector evaluation
             scores[j] = eval_f(population[j])
         # best vectors selection
         sorted_res = sorted(zip(scores, population), key=lambda x:x[0], reverse=True)
         best = sorted_res[:num_best_vec_to_update_from]
         worst = sorted_res[-num_worst_vec_to_update_from:]
-        print best, vec
 
         # update best_of_all
         if best_of_all[0] < best[0][0]:
@@ -82,17 +81,6 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
         if vec_storage is not None:
             vec_storage.append(list(vec))
 
-    print best_of_all
     return best_of_all[1]
 
-
-if __name__ == '__main__':
-    def eval_fun(nums, bits):
-        assert len(nums) == len(bits)
-        return sum(nums[i]*bits[i] for i in range(len(nums)))
-    data = [-1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12, -13, 14, 15, 16, -17, -18, -19]
-    l = []
-    print optimize(0.02, 0.02, 10, 2, 2, len(data), 25, functools.partial(eval_fun, data), vec_storage=l)
-    print 'l'
-    print np.asarray(l, float)
 
