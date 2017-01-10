@@ -18,7 +18,7 @@ def get_num(proba):
 
 
 def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, num_worst_vec_to_update_from, vec_len,
-             optimisation_cycles, eval_f):
+             optimisation_cycles, eval_f, eps=0.01):
 
     # vector initialisation
     vec = np.full(vec_len, 0.5, dtype=float)
@@ -55,9 +55,9 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
         # vector correction if elements outside [0, 1] range
         for i in range(vec_len):
             if vec[i] < 0:
-                vec[i] = 0
+                vec[i] = 0 + eps
             elif vec[i] > 1:
-                vec[i] = 1
+                vec[i] = 1 - eps
     print best_of_all
     return best_of_all[1]
 
