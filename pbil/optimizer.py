@@ -1,5 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
+
 import random
 import functools
 
@@ -23,8 +24,10 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
     vec = np.full(vec_len, 0.5, dtype=float)
 
     # initialise population
-    population = np.empty((pop_size, vec_len), dtype=float)
+    population = np.empty((pop_size, vec_len), dtype=int)
     scores = [None for _ in range(pop_size)]
+
+    best_of_all = [-float("inf"), None]
 
     for i in range(optimisation_cycles):
         # solution vectors generation
@@ -39,6 +42,10 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
         worst = sorted_res[-num_worst_vec_to_update_from:]
         print best, vec
 
+        # update best_of_all
+        if best_of_all[0] < best[0][0]:
+            best_of_all = (best[0][0], list(best[0][1]))
+
         # update vector
         for v in best:
             vec += 2 * learn_rate * (v[1] - 0.5)
@@ -51,7 +58,8 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
                 vec[i] = 0
             elif vec[i] > 1:
                 vec[i] = 1
-    return best[0][1] #TODO powinien zwracać najlepszy z wszystkich, nie z tej tury
+    print best_of_all
+    return best_of_all[1]
 
 
 if __name__ == '__main__':
