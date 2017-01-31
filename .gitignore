@@ -93,3 +93,6 @@ ENV/
 # added by me:
 # intellij
 .idea
+
+#compiled
+.pyc
