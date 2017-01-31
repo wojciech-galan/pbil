@@ -36,6 +36,7 @@ Example
 ~~~~~~~
 Download and run example.py ::
 
+    wget https://raw.githubusercontent.com/wojciech-galan/pbil/setup/example.py
     python example.py
 
 You can see the algorithm learning how to select numbers from the list to maximize their sum.
