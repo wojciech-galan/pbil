@@ -71,11 +71,11 @@ def optimize(learn_rate, neg_learn_rate, pop_size, num_best_vec_to_update_from, 
             vec -= 2 * neg_learn_rate * (v[1] - 0.5)
 
         # vector correction if elements outside [0, 1] range
-        for i in range(vec_len):
-            if vec[i] < 0:
-                vec[i] = 0 + eps
-            elif vec[i] > 1:
-                vec[i] = 1 - eps
+        for j in range(vec_len):
+            if vec[j] < 0:
+                vec[j] = 0 + eps
+            elif vec[j] > 1:
+                vec[j] = 1 - eps
 
         # store vec?
         if vec_storage is not None:
