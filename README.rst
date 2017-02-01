@@ -19,7 +19,7 @@ User installation
 ~~~~~~~~~~~~~~~~~
 
 If you already have a working installation of numpy,
-the easiest way to install scikit-learn is using ``pip`` ::
+the easiest way to install pbil is using ``pip`` ::
 
     pip install -U git+https://github.com/wojciech-galan/pbil.git
 
